@@ -26,15 +26,6 @@ const authCtrl = {
             const access_token = createAccessToken({ id: newUser._id });
             const refresh_token = generateRefreshToken({ id: newUser._id }, res);
 
-            // create cookie refresh_token
-            // res.cookie('refreshtoken', refresh_token, {
-            //     sameSite: 'none',
-            //     secure: true,
-            //     httpOnly: false,
-            //     path: `/api/refresh_token`,
-            //     maxAge: 30 * 24 * 60 * 60 * 1000,
-            // });
-
             await newUser.save();
 
             res.json({ msg: 'Đăng ký thành công', access_token, user: { ...newUser._doc, password: '' } });
@@ -54,15 +45,6 @@ const authCtrl = {
 
             const access_token = createAccessToken({ id: user._id });
             const refresh_token = generateRefreshToken({ id: user._id }, res);
-
-            // create cookie refresh_token
-            // res.cookie('refreshtoken', refresh_token, {
-            //     sameSite: 'none',
-            //     secure: true,
-            //     httpOnly: false,
-            //     path: `/api/refresh_token`,
-            //     maxAge: 30 * 24 * 60 * 60 * 1000, // 30days
-            // });
 
             res.json({
                 msg: 'Đăng nhập thành công',
