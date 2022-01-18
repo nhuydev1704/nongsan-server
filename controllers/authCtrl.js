@@ -55,9 +55,11 @@ const authCtrl = {
 
             // create cookie refresh_token
             res.cookie('refreshtoken', refresh_token, {
+                sameSite: 'none',
                 secure: true,
-                maxAge: 30 * 24 * 60 * 60 * 1000,
-                sameSite: true,
+                httpOnly: true,
+                path: `/api/refresh_token`,
+                maxAge: 30 * 24 * 60 * 60 * 1000, // 30days
             });
 
             res.json({ msg: 'Đăng nhập thành công', access_token, user: { ...user._doc, password: '' } });
