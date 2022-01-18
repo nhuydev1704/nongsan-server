@@ -28,8 +28,6 @@ const authCtrl = {
 
             // create cookie refresh_token
             res.cookie('refreshtoken', refresh_token, {
-                httpOnly: true,
-                path: `/api/refresh_token`,
                 secure: true,
                 maxAge: 30 * 24 * 60 * 60 * 1000,
                 sameSite: true,
@@ -57,8 +55,6 @@ const authCtrl = {
 
             // create cookie refresh_token
             res.cookie('refreshtoken', refresh_token, {
-                httpOnly: true,
-                path: `/api/refresh_token`,
                 secure: true,
                 maxAge: 30 * 24 * 60 * 60 * 1000,
                 sameSite: true,
