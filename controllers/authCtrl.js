@@ -32,7 +32,7 @@ const authCtrl = {
                 path: `/api/refresh_token`,
                 secure: true,
                 maxAge: 30 * 24 * 60 * 60 * 1000,
-                sameSite: 'none',
+                sameSite: true,
             });
 
             await newUser.save();
@@ -61,7 +61,7 @@ const authCtrl = {
                 path: `/api/refresh_token`,
                 secure: true,
                 maxAge: 30 * 24 * 60 * 60 * 1000,
-                sameSite: 'none',
+                sameSite: true,
             });
 
             res.json({ msg: 'Đăng nhập thành công', access_token, user: { ...user._doc, password: '' } });

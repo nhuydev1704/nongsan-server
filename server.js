@@ -4,10 +4,13 @@ import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import AllRouter from './routes/index.js';
+import http from 'http';
+
 dotenv.config();
 
 // midleware
 const app = express();
+
 app.use(express.json());
 app.use(
     cors({
@@ -21,6 +24,8 @@ app.use(express.urlencoded({ extended: false }));
 app.get('/', (rq, res) => {
     res.json({ msg: 'Hello World' });
 });
+
+const https = http.createServer(app);
 
 // Routes
 app.use('/api', AllRouter.auth);
@@ -46,6 +51,6 @@ mongoose.connect(
 
 const port = process.env.PORT || 5000;
 
-app.listen(port, () => {
+https.listen(port, () => {
     console.log(`Server started on port ${port}`);
 });
