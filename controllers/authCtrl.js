@@ -5,11 +5,9 @@ import jwt from 'jsonwebtoken';
 const authCtrl = {
     register: async (req, res) => {
         try {
-            const { fullname, username, email, password, gender } = req.body;
+            const { username, email, password } = req.body;
 
-            let newUserName = username.toLowerCase().replace(/ /g, '');
-
-            const user_name = await Users.findOne({ username: newUserName });
+            const user_name = await Users.findOne({ username });
             if (user_name) return res.status(400).json({ msg: 'Tài khoản đã tồn tại' });
 
             const user_email = await Users.findOne({ email });
@@ -20,11 +18,9 @@ const authCtrl = {
             const passwordHash = await bcrypt.hash(password, 12);
 
             const newUser = new Users({
-                fullname,
-                username: newUserName,
+                username,
                 email,
                 password: passwordHash,
-                gender,
             });
 
             const access_token = createAccessToken({ id: newUser._id });
@@ -48,7 +44,7 @@ const authCtrl = {
         try {
             const { email, password } = req.body;
 
-            const user = await Users.findOne({ email }).populate('followers following', '-password');
+            const user = await Users.findOne({ email });
             if (!user) return res.status(400).json({ msg: 'Email không tồn tại' });
 
             const isMatch = await bcrypt.compare(password, user.password);
@@ -85,13 +81,11 @@ const authCtrl = {
             if (!refresh_token) return res.status(400).json({ msg: 'Hãy đăng nhập' });
 
             // verify refresh_token
-            jwt.verify(refresh_token, process.env.REFRESH_TOKEN_SECRET, (err, payload) => {
+            jwt.verify(refresh_token, process.env.REFRESH_TOKEN_SECRET, async (err, payload) => {
                 if (err) return res.status(400).json({ msg: 'Hãy đăng nhập' });
 
                 // get user from payload
-                const user = Users.findById(payload.id)
-                    .select('-password')
-                    .populate('followers following', '-password');
+                const user = await Users.findById(payload.id).select('-password');
                 if (!user) return res.status(400).json({ msg: 'Hãy đăng nhập' });
 
                 // create new access_token

@@ -18,6 +18,9 @@ app.get('/', (rq, res) => {
 
 // Routes
 app.use('/api', AllRouter.auth);
+app.use('/api', AllRouter.user);
+app.use('/api', AllRouter.product);
+app.use('/api', AllRouter.category);
 
 const URI = process.env.MONGOO_URL;
 mongoose.connect(
