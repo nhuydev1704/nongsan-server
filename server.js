@@ -9,8 +9,14 @@ dotenv.config();
 // midleware
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(
+    cors({
+        origin: `https://master--suspicious-meitner-3e7ec6.netlify.app`,
+        credentials: true,
+    })
+);
 app.use(cookieParser());
+app.use(express.urlencoded({ extended: false }));
 
 app.get('/', (rq, res) => {
     res.json({ msg: 'Hello World' });
