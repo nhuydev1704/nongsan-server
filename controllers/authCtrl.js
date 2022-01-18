@@ -82,15 +82,15 @@ const authCtrl = {
         try {
             // get refresh_token from cookie
             const refresh_token = req.cookies.refreshtoken;
-            if (!refresh_token) return res.status(400).json({ msg: 'Hãy đăng nhập' });
+            if (!refresh_token) return res.status(401).json({ msg: 'Hãy đăng nhập' });
 
             // verify refresh_token
             jwt.verify(refresh_token, process.env.REFRESH_TOKEN_SECRET, async (err, payload) => {
-                if (err) return res.status(400).json({ msg: 'Hãy đăng nhập' });
+                if (err) return res.status(402).json({ msg: 'Hãy đăng nhập' });
 
                 // get user from payload
                 const user = await Users.findById(payload.id).select('-password');
-                if (!user) return res.status(400).json({ msg: 'Hãy đăng nhập' });
+                if (!user) return res.status(403).json({ msg: 'Hãy đăng nhập' });
 
                 // create new access_token
                 const access_token = createAccessToken({ id: payload.id });
