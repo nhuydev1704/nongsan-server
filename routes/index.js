@@ -1,7 +1,7 @@
-import authRouter from './authRouter.js';
-import userRouter from './userRouter.js';
-import productRouter from './productRouter.js';
-import categoryRouter from './categoryRouter.js';
+const authRouter = require('./authRouter');
+const userRouter = require('./userRouter');
+const productRouter = require('./productRouter');
+const categoryRouter = require('./categoryRouter');
 
 const AllRouter = {
     auth: authRouter,
@@ -10,4 +10,4 @@ const AllRouter = {
     category: categoryRouter,
 };
 
-export default AllRouter;
+module.exports = AllRouter;

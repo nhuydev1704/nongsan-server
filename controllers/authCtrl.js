@@ -1,6 +1,6 @@
-import Users from '../models/userModel.js';
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
+const Users = require('../models/userModel');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const authCtrl = {
     register: async (req, res) => {
@@ -86,7 +86,7 @@ const authCtrl = {
     generateAccessToken: async (req, res) => {
         try {
             // get refresh_token from cookie
-            return res.json({ msg: req.cookies });
+            // return res.json({ msg: req.cookies });
             const refresh_token = req.cookies.refreshtoken;
             if (!refresh_token) return res.status(401).json({ msg: 'Hãy đăng nhập' });
 
@@ -121,4 +121,4 @@ const createRefreshToken = (payload) => {
     return refresh_token;
 };
 
-export default authCtrl;
+module.exports = authCtrl;

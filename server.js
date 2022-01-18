@@ -1,21 +1,21 @@
-import express from 'express';
-import mongoose from 'mongoose';
-import dotenv from 'dotenv';
-import cookieParser from 'cookie-parser';
-import cors from 'cors';
-import AllRouter from './routes/index.js';
+const express = require('express');
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+const cookieParser = require('cookie-parser');
+const cors = require('cors');
+const AllRouter = require('./routes/index.js');
 dotenv.config();
 
 // midleware
 const app = express();
-app.use(cookieParser());
-app.use(express.json());
 app.use(
     cors({
         origin: '*',
         credentials: true,
     })
 );
+app.use(cookieParser());
+app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.get('/', (req, res) => {

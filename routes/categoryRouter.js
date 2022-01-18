@@ -1,8 +1,8 @@
-import express from 'express';
-import categoryCtrl from '../controllers/categoryCtrl.js';
+const express = require('express');
+const categoryCtrl = require('../controllers/categoryCtrl');
 
 const router = express.Router();
 
 router.get('/category', categoryCtrl.getAll).post('/category', categoryCtrl.store);
 
-export default router;
+module.exports = router;

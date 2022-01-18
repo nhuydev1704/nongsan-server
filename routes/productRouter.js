@@ -1,7 +1,7 @@
-import productCtrl from '../controllers/productCtrl.js';
+const productCtrl = require('../controllers/productCtrl');
 
-import auth from '../middleware/auth.js';
-import express from 'express';
+const auth = require('../middleware/auth');
+const express = require('express');
 
 const router = express.Router();
 
@@ -9,4 +9,4 @@ router.get('/product', productCtrl.getAllProducts).post('/product', productCtrl.
 
 router.put('/product/:id', productCtrl.updateProduct);
 
-export default router;
+module.exports = router;

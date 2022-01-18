@@ -1,4 +1,4 @@
-import Category from '../models/categoryModel.js';
+const Category = require('../models/categoryModel');
 
 const categoryCtrl = {
     getAll: async (req, res) => {
@@ -23,4 +23,4 @@ const categoryCtrl = {
     },
 };
 
-export default categoryCtrl;
+module.exports = categoryCtrl;

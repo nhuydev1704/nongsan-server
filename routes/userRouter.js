@@ -1,10 +1,10 @@
-import userCtrl from '../controllers/userCtrl.js';
-import auth from '../middleware/auth.js';
-import express from 'express';
+const userCtrl = require('../controllers/userCtrl');
+const auth = require('../middleware/auth');
+const express = require('express');
 
 const router = express.Router();
 
 router.get('/search', auth, userCtrl.searchUser);
 router.get('/user/:id', auth, userCtrl.getUser);
 
-export default router;
+module.exports = router;

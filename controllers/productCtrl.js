@@ -1,5 +1,5 @@
-import Products from '../models/productModel.js';
-import APIFeature from '../service/APIFeature.js';
+const Products = require('../models/productModel');
+const APIFeature = require('../service/APIFeature');
 
 const productCtrl = {
     getAllProducts: async (req, res) => {
@@ -51,4 +51,4 @@ const productCtrl = {
     },
 };
 
-export default productCtrl;
+module.exports = productCtrl;

@@ -1,4 +1,4 @@
-import Users from '../models/userModel.js';
+const Users = require('../models/userModel');
 
 const userCtrl = {
     // create function search user
@@ -28,4 +28,4 @@ const userCtrl = {
     },
 };
 
-export default userCtrl;
+module.exports = userCtrl;
