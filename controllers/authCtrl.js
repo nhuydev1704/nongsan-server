@@ -86,6 +86,7 @@ const authCtrl = {
     generateAccessToken: async (req, res) => {
         try {
             // get refresh_token from cookie
+            return res.json({ msg: req.cookies });
             const refresh_token = req.cookies.refreshtoken;
             if (!refresh_token) return res.status(401).json({ msg: 'Hãy đăng nhập' });
 
