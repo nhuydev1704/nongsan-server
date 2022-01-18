@@ -24,16 +24,16 @@ const authCtrl = {
             });
 
             const access_token = createAccessToken({ id: newUser._id });
-            const refresh_token = createRefreshToken({ id: newUser._id });
+            const refresh_token = generateRefreshToken({ id: newUser._id }, res);
 
             // create cookie refresh_token
-            res.cookie('refreshtoken', refresh_token, {
-                sameSite: 'none',
-                secure: true,
-                httpOnly: false,
-                path: `/api/refresh_token`,
-                maxAge: 30 * 24 * 60 * 60 * 1000, // 30days
-            });
+            // res.cookie('refreshtoken', refresh_token, {
+            //     sameSite: 'none',
+            //     secure: true,
+            //     httpOnly: false,
+            //     path: `/api/refresh_token`,
+            //     maxAge: 30 * 24 * 60 * 60 * 1000,
+            // });
 
             await newUser.save();
 
@@ -53,16 +53,16 @@ const authCtrl = {
             if (!isMatch) return res.status(400).json({ msg: 'Mật khẩu không đúng' });
 
             const access_token = createAccessToken({ id: user._id });
-            const refresh_token = createRefreshToken({ id: user._id });
+            const refresh_token = generateRefreshToken({ id: user._id }, res);
 
             // create cookie refresh_token
-            res.cookie('refreshtoken', refresh_token, {
-                sameSite: 'none',
-                secure: true,
-                httpOnly: false,
-                path: `/api/refresh_token`,
-                maxAge: 30 * 24 * 60 * 60 * 1000, // 30days
-            });
+            // res.cookie('refreshtoken', refresh_token, {
+            //     sameSite: 'none',
+            //     secure: true,
+            //     httpOnly: false,
+            //     path: `/api/refresh_token`,
+            //     maxAge: 30 * 24 * 60 * 60 * 1000, // 30days
+            // });
 
             res.json({
                 msg: 'Đăng nhập thành công',
@@ -108,6 +108,19 @@ const authCtrl = {
             return res.status(500).json({ msg: err.message });
         }
     },
+};
+const generateRefreshToken = (payload, res) => {
+    const refresh_token = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '30d' });
+
+    res.cookie('refreshtoken', refresh_token, {
+        sameSite: 'none',
+        secure: true,
+        httpOnly: true,
+        path: `/api/refresh_token`,
+        maxAge: 30 * 24 * 60 * 60 * 1000, // 30days
+    });
+
+    return refresh_token;
 };
 
 const createAccessToken = (payload) => {
