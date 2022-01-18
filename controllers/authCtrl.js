@@ -28,11 +28,11 @@ const authCtrl = {
 
             // create cookie refresh_token
             res.cookie('refreshtoken', refresh_token, {
+                sameSite: 'none',
+                secure: true,
                 httpOnly: true,
                 path: `/api/refresh_token`,
-                secure: true,
-                maxAge: 30 * 24 * 60 * 60 * 1000,
-                sameSite: true,
+                maxAge: 30 * 24 * 60 * 60 * 1000, // 30days
             });
 
             await newUser.save();
@@ -57,14 +57,19 @@ const authCtrl = {
 
             // create cookie refresh_token
             res.cookie('refreshtoken', refresh_token, {
+                sameSite: 'none',
+                secure: true,
                 httpOnly: true,
                 path: `/api/refresh_token`,
-                secure: true,
-                maxAge: 30 * 24 * 60 * 60 * 1000,
-                sameSite: true,
+                maxAge: 30 * 24 * 60 * 60 * 1000, // 30days
             });
 
-            res.json({ msg: 'Đăng nhập thành công', access_token, user: { ...user._doc, password: '' } });
+            res.json({
+                msg: 'Đăng nhập thành công',
+                refresh_token,
+                access_token,
+                user: { ...user._doc, password: '' },
+            });
         } catch (err) {
             return res.status(500).json({ msg: err.message });
         }
