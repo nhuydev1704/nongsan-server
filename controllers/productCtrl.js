@@ -43,6 +43,7 @@ const productCtrl = {
                 return res.status(404).json({ msg: 'Không tìm thấy sản phẩm' });
             }
             product.color = req.body.color;
+            product.textColor = req.body.textColor;
             await product.save();
             res.json({ msg: 'Cập nhật thành công', product: product });
         } catch (err) {
