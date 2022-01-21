@@ -1,10 +1,30 @@
 const Category = require('../models/categoryModel');
-
+const CategoryChildren = require('../models/categoryChildrenModel');
 const categoryCtrl = {
     getAll: async (req, res) => {
         try {
             const categories = await Category.find();
-            res.json(categories);
+            const children = await CategoryChildren.find();
+
+            const listCategory = categories.map((category) => {
+                const childrenCategory = children.filter((child) => child.parent === category._id.toString());
+                return {
+                    ...category._doc,
+                    children: childrenCategory,
+                };
+            });
+
+            res.json(listCategory);
+        } catch (err) {
+            return res.status(500).json({ msg: err.message });
+        }
+    },
+    storeChildren: async (req, res) => {
+        try {
+            const { name, parent } = req.body;
+            const category = new CategoryChildren({ name, parent });
+            await category.save();
+            res.json(category);
         } catch (err) {
             return res.status(500).json({ msg: err.message });
         }

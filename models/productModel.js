@@ -23,6 +23,11 @@ const productSchema = new mongoose.Schema(
             required: true,
             ref: 'Category',
         },
+        child_category: {
+            type: mongoose.Schema.Types.ObjectId,
+            required: true,
+            ref: 'CategoryChildren',
+        },
         numReviewers: {
             type: Number,
             default: 0,

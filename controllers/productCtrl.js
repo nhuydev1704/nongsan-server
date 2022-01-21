@@ -4,7 +4,7 @@ const APIFeature = require('../service/APIFeature');
 const productCtrl = {
     getAllProducts: async (req, res) => {
         try {
-            const feature = new APIFeature(Products.find().populate('category'), req.query)
+            const feature = new APIFeature(Products.find().populate('category').populate('child_category'), req.query)
                 .filtering()
                 .sorting()
                 .paginating();
@@ -28,6 +28,7 @@ const productCtrl = {
                 description: req.body.description,
                 image: req.body.image,
                 category: req.body.category,
+                child_category: req.body.child_category,
             });
             await newProduct.save();
             res.json({ msg: 'Thêm thành công' });
