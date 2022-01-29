@@ -7,6 +7,10 @@ const router = express.Router();
 
 router.get('/product', productCtrl.getAllProducts).post('/product', productCtrl.store);
 
-router.put('/product/:id', productCtrl.updateProduct);
+router
+    .put('/product/:id', productCtrl.updateProduct)
+    .get('/product/:id', productCtrl.show)
+    .put('/products/:id', productCtrl.update)
+    .delete('/product/:id', productCtrl.delete);
 
 module.exports = router;

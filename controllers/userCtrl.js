@@ -26,6 +26,23 @@ const userCtrl = {
             return res.status(500).json({ msg: error.message });
         }
     },
+    addCart: async (req, res) => {
+        try {
+            const user = await Users.findById(req.user.id);
+            if (!user) return res.status(400).json({ msg: 'User không tồn tại.' });
+
+            await Users.findOneAndUpdate(
+                { _id: req.user.id },
+                {
+                    cart: req.body.cart,
+                }
+            );
+
+            return res.json({ msg: 'Thêm giỏ hàng thành công' });
+        } catch (err) {
+            return res.status(500).json({ msgerr: err.message });
+        }
+    },
 };
 
 module.exports = userCtrl;

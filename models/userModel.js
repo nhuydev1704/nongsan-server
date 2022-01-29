@@ -45,6 +45,10 @@ const userSchema = new mongoose.Schema(
             default: '',
             maxlength: 200,
         },
+        cart: {
+            type: Array,
+            default: [],
+        },
     },
     {
         timestamps: true,
