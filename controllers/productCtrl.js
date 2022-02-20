@@ -38,6 +38,7 @@ const productCtrl = {
             const newProduct = new Products({
                 title: req.body.title,
                 price: req.body.price,
+                price_text: req.body.price_text,
                 description: req.body.description,
                 image: req.body.image,
                 category: req.body.category,
@@ -56,6 +57,7 @@ const productCtrl = {
 
             product.title = req.body.title;
             product.price = req.body.price;
+            product.price_text = req.body.price_text;
             product.description = req.body.description;
             product.image = req.body.image;
             product.category = req.body.category;

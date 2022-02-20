@@ -1,4 +1,6 @@
 const Users = require('../models/userModel');
+const Payments = require('../models/paymentModel');
+const APIFeature = require('../service/APIFeature');
 
 const userCtrl = {
     // create function search user
@@ -39,6 +41,17 @@ const userCtrl = {
             );
 
             return res.json({ msg: 'Thêm giỏ hàng thành công' });
+        } catch (err) {
+            return res.status(500).json({ msgerr: err.message });
+        }
+    },
+    history: async (req, res) => {
+        try {
+            const history = new APIFeature(Payments.find({ user_id: req.user.id }), req.query).filtering();
+
+            const historys = await history.query;
+
+            res.json(historys);
         } catch (err) {
             return res.status(500).json({ msgerr: err.message });
         }

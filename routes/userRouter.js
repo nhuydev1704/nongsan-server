@@ -8,4 +8,6 @@ router.get('/search', auth, userCtrl.searchUser);
 router.get('/user/:id', auth, userCtrl.getUser);
 router.patch('/addcart', auth, userCtrl.addCart);
 
+router.get('/history', auth, userCtrl.history);
+
 module.exports = router;

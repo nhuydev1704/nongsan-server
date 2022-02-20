@@ -10,7 +10,7 @@ dotenv.config();
 const app = express();
 app.use(
     cors({
-        origin: 'https://thuyhang.cf',
+        origin: 'http://localhost:3000',
         credentials: true,
     })
 );
@@ -27,6 +27,7 @@ app.use('/api', AllRouter.auth);
 app.use('/api', AllRouter.user);
 app.use('/api', AllRouter.product);
 app.use('/api', AllRouter.category);
+app.use('/api', AllRouter.payment);
 
 const URI = process.env.MONGOO_URL;
 mongoose.connect(
