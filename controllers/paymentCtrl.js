@@ -13,7 +13,7 @@ const paymentCtrl = {
 
             // const products = await feature.query;
 
-            const payment = new APIFeature(Payments.find(), req.query);
+            const payment = new APIFeature(Payments.find(), req.query).filtering();
 
             const payments = await payment.query;
             res.json(payments);
@@ -38,6 +38,20 @@ const paymentCtrl = {
             );
 
             res.json({ msg: 'Chuyển trạng thái thành công' });
+        } catch (err) {
+            return res.status(500).json({ msg: err.message });
+        }
+    },
+    deletePayment: async (req, res) => {
+        try {
+            const { id } = req.params;
+            const payment = await Payments.findById(id);
+            if (!payment) return res.status(400).json({ msg: 'Không tìm thấy giao dịch' });
+
+            // find id and delete payment
+            await Payments.findOneAndDelete({ _id: id });
+
+            res.json({ msg: 'Xóa giao dịch thành công' });
         } catch (err) {
             return res.status(500).json({ msg: err.message });
         }
