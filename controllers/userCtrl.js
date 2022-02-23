@@ -56,6 +56,29 @@ const userCtrl = {
             return res.status(500).json({ msgerr: err.message });
         }
     },
+    updateUser: async (req, res) => {
+        try {
+            const user = await Users.findById(req.user.id);
+            if (!user) return res.status(400).json({ msg: 'User không tồn tại.' });
+
+            await Users.findOneAndUpdate(
+                { _id: req.user.id },
+                {
+                    username: req.body.username,
+                    mobile: req.body.phone,
+                    address: req.body.address,
+                    avatar: req.body.avatar,
+                    website: req.body.website,
+                    story: req.body.story,
+                    gender: req.body.gender,
+                }
+            );
+
+            return res.json({ msg: 'Cập nhật thành công' });
+        } catch (err) {
+            return res.status(500).json({ msgerr: err.message });
+        }
+    },
 };
 
 module.exports = userCtrl;

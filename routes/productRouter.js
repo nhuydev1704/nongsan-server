@@ -11,6 +11,7 @@ router
     .put('/product/:id', productCtrl.updateProduct)
     .get('/product/:id', productCtrl.show)
     .put('/products/:id', productCtrl.update)
+    .patch('/products/:id', productCtrl.reviews)
     .delete('/product/:id', productCtrl.delete);
 
 module.exports = router;

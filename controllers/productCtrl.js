@@ -95,6 +95,30 @@ const productCtrl = {
             return res.status(500).json({ msg: err.message });
         }
     },
+    reviews: async (req, res) => {
+        try {
+            const { rating } = req.body;
+            if (rating && rating !== 0) {
+                const product = await Products.findById(req.params.id);
+                if (!product) return res.status(400).json({ msg: 'Sản Phẩm Không Tồn Tại.' });
+
+                let num = product.numReviewers;
+                let rate = product.rating;
+
+                await Products.findOneAndUpdate(
+                    { _id: req.params.id },
+                    {
+                        rating: rate + rating,
+                        numReviewers: num + 1,
+                    }
+                );
+
+                res.json({ msg: 'Cập nhật thành công' });
+            }
+        } catch (err) {
+            return res.status(500).json({ msg: err.message });
+        }
+    },
 };
 
 module.exports = productCtrl;
