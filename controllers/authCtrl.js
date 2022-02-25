@@ -90,6 +90,33 @@ const authCtrl = {
             return res.status(500).json({ msg: err.message });
         }
     },
+    resetPassword: async (req, res) => {
+        try {
+            const { oldPassword, newPassword } = req.body;
+
+            // check old password
+            const user = await Users.findById(req.user.id);
+
+            if (!user) return res.status(404).json({ msg: 'Không tìm thấy người dùng' });
+
+            const isMatch = await bcrypt.compare(oldPassword, user.password);
+
+            if (!isMatch) return res.status(401).json({ msg: 'Mật khẩu cũ không đúng' });
+
+            const passwordHash = await bcrypt.hash(newPassword, 12);
+
+            await Users.findOneAndUpdate(
+                { _id: req.user.id },
+                {
+                    password: passwordHash,
+                }
+            );
+
+            res.json({ msg: 'Đổi mật khẩu thành công!' });
+        } catch (err) {
+            return res.status(500).json({ msg: err.message });
+        }
+    },
 };
 const generateRefreshToken = (payload, res) => {
     const refresh_token = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '30d' });
