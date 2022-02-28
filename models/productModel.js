@@ -45,6 +45,10 @@ const productSchema = new mongoose.Schema(
         },
         color: { type: String, default: 'fff' },
         textColor: { type: String, default: '#111' },
+        discount: {
+            type: Number,
+            default: 0,
+        },
     },
     {
         timestamps: true,

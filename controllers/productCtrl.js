@@ -10,11 +10,19 @@ const productCtrl = {
                 .paginating();
 
             const products = await feature.query;
+            const caculatePriceProduct = products.map((product) => {
+                // caculate price in discount
+                return {
+                    ...product._doc,
+                    price_old: product.price,
+                    price: product.discount == 0 ? product.price : (product.price * product.discount) / 100,
+                };
+            });
 
             res.json({
                 status: 'success',
                 result: products.length,
-                products: products,
+                products: caculatePriceProduct,
             });
         } catch (err) {
             return res.status(500).json({ msg: err.message });
@@ -43,6 +51,7 @@ const productCtrl = {
                 image: req.body.image,
                 category: req.body.category,
                 child_category: req.body.child_category,
+                discount: req.body.discount,
             });
             await newProduct.save();
             res.json({ msg: 'Thêm thành công' });
@@ -62,6 +71,7 @@ const productCtrl = {
             product.image = req.body.image;
             product.category = req.body.category;
             product.child_category = req.body.child_category;
+            product.discount = req.body.discount;
 
             await product.save();
             res.json({ msg: 'Cập nhật thành công' });

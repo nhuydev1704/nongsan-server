@@ -6,13 +6,6 @@ const APIFeature = require('../service/APIFeature');
 const paymentCtrl = {
     getPayments: async (req, res) => {
         try {
-            // const feature = new APIFeature(Products.find().populate('category').populate('child_category'), req.query)
-            //     .filtering()
-            //     .sorting()
-            //     .paginating();
-
-            // const products = await feature.query;
-
             const payment = new APIFeature(Payments.find(), req.query).filtering();
 
             const payments = await payment.query;
@@ -51,7 +44,7 @@ const paymentCtrl = {
             // find id and delete payment
             await Payments.findOneAndDelete({ _id: id });
 
-            res.json({ msg: 'Xóa giao dịch thành công' });
+            res.json({ msg: 'Xóa thành công' });
         } catch (err) {
             return res.status(500).json({ msg: err.message });
         }
