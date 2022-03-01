@@ -31,6 +31,31 @@ const productCtrl = {
             return res.status(500).json({ msg: err.message });
         }
     },
+    getFullProducts: async (req, res) => {
+        try {
+            const products = await Products.find().populate('category').populate('child_category');
+            const caculatePriceProduct = products.map((product) => {
+                // caculate price in discount
+                return {
+                    ...product._doc,
+                    price_old: product.price,
+                    price:
+                        product.discount == 0
+                            ? product.price
+                            : product.price - (product.price * product.discount) / 100,
+                };
+            });
+
+            res.json({
+                status: 'success',
+                result: products.length,
+                products: caculatePriceProduct,
+            });
+        } catch (err) {
+            return res.status(500).json({ msg: err.message });
+        }
+    },
+
     show: async (req, res) => {
         try {
             const product = await Products.findById(req.params.id).populate('category').populate('child_category');

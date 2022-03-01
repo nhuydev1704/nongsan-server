@@ -5,7 +5,10 @@ const express = require('express');
 
 const router = express.Router();
 
-router.get('/product', productCtrl.getAllProducts).post('/product', productCtrl.store);
+router
+    .get('/product', productCtrl.getAllProducts)
+    .post('/product', productCtrl.store)
+    .get('/all_pro', productCtrl.getFullProducts);
 
 router
     .put('/product/:id', productCtrl.updateProduct)
