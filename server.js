@@ -31,6 +31,7 @@ app.use('/api', AllRouter.product);
 app.use('/api', AllRouter.category);
 app.use('/api', AllRouter.payment);
 app.use('/api', AllRouter.noti);
+app.use('/api', AllRouter.banner);
 
 const http = require('http').createServer(app);
 const io = require('socket.io')(http, {

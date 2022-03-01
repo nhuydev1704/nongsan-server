@@ -15,7 +15,10 @@ const productCtrl = {
                 return {
                     ...product._doc,
                     price_old: product.price,
-                    price: product.discount == 0 ? product.price : (product.price * product.discount) / 100,
+                    price:
+                        product.discount == 0
+                            ? product.price
+                            : product.price - (product.price * product.discount) / 100,
                 };
             });
 

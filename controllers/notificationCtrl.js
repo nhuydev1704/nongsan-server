@@ -3,9 +3,11 @@ const APIFeature = require('../service/APIFeature');
 const notificationCtrl = {
     get: async (req, res) => {
         try {
-            const feature = new APIFeature(Notifications.find().populate('user'), req.query).filtering().paginating();
+            // const feature = new APIFeature(Notifications.find().populate('user'), req.query).filtering().paginating();
 
-            const notifications = await feature.query;
+            // const notifications = await feature.query;
+
+            const notifications = await Notifications.find().populate('user').sort({ createdAt: -1 });
 
             res.json({
                 notifications,
