@@ -21,6 +21,7 @@ const productCtrl = {
                             : product.price - (product.price * product.discount) / 100,
                 };
             });
+            
 
             res.json({
                 status: 'success',

@@ -12,7 +12,7 @@ dotenv.config();
 const app = express();
 app.use(
     cors({
-        origin: 'https://thuyhang.cf',
+        origin: 'http://localhost:3000',
         credentials: true,
     })
 );
