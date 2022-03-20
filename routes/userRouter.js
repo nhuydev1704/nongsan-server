@@ -9,7 +9,7 @@ router.get('/comments/:id', commentCtrl.getComments);
 
 router.get('/search', auth, userCtrl.searchUser);
 
-router.get('/user/:id', auth, userCtrl.getUser);
+router.get('/user_info', auth, userCtrl.getUser);
 
 router.post('/user', auth, userCtrl.updateUser);
 
