@@ -45,6 +45,17 @@ const userCtrl = {
             return res.status(500).json({ msgerr: err.message });
         }
     },
+    checkUser: async (req, res) => {
+        const { email } = req.body;
+        try {
+            const user = await Users.findOne({ email });
+            if (!user) return res.status(400).json({ msg: 'Tài khoản không tồn tại, Đăng ký.' });
+
+            return res.json({ msg: 'User tồn tại.' });
+        } catch (err) {
+            return res.status(500).json({ msgerr: err.message });
+        }
+    },
     history: async (req, res) => {
         try {
             const history = new APIFeature(Payments.find({ user_id: req.user.id }), req.query).filtering();
