@@ -17,6 +17,6 @@ router.patch('/addcart', auth, userCtrl.addCart);
 
 router.get('/history', auth, userCtrl.history);
 
-router.get('/check_user', userCtrl.checkUser);
+router.post('/check_user', userCtrl.checkUser);
 
 module.exports = router;
