@@ -15,7 +15,8 @@ router.post('/reset', auth, authCtrl.resetPassword);
 
 router.get('/refresh_token', authCtrl.generateAccessToken);
 
-router.get('/history_search', auth, historySearchCtrl.get).post('/history_search', historySearchCtrl.store);
+router.get('/history_search', auth, historySearchCtrl.get);
+router.post('/history_search', historySearchCtrl.store);
 router.delete('/history_search/:id', historySearchCtrl.delete);
 
 module.exports = router;
