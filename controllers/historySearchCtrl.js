@@ -3,7 +3,7 @@ const HistorySearch = require('../models/historySearchModel');
 const historySearchCtrl = {
     get: async (req, res) => {
         try {
-            const historySearch = await HistorySearch.find();
+            const historySearch = await HistorySearch.find({ user: req.user.id }).populate('user');
             res.json(historySearch);
         } catch (err) {
             return res.status(500).json({ msg: err.message });
