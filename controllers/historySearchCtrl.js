@@ -3,7 +3,12 @@ const HistorySearch = require('../models/historySearchModel');
 const historySearchCtrl = {
     get: async (req, res) => {
         try {
-            const historySearch = await HistorySearch.find({ user: req.user.id }).populate('user');
+            const feature = new APIFeature(HistorySearch.find({ user: req.user.id }).populate('user'), req.query)
+                .filtering()
+                .sorting()
+                .paginating();
+
+            const historySearch = await feature.query;
             res.json(historySearch);
         } catch (err) {
             return res.status(500).json({ msg: err.message });
