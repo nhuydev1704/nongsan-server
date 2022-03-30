@@ -1,4 +1,5 @@
 const HistorySearch = require('../models/historySearchModel');
+const APIFeature = require('../service/APIFeature');
 
 const historySearchCtrl = {
     get: async (req, res) => {
