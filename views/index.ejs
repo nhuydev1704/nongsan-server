@@ -8,8 +8,8 @@
     </head>
     <body>
         <h1>Vui lòng chờ...</h1>
-        <form name="f1" action="/paypal">
-            <input type="text" id="price" />
+        <form method="POST" name="f1" action="/paypal">
+            <input hidden name="price" type="text" id="price" />
         </form>
     </body>
 </html>

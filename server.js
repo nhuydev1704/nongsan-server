@@ -8,6 +8,7 @@ const Comments = require('./models/commentModel');
 const AllRouter = require('./routes/index.js');
 const engines = require('consolidate');
 const paypal = require('paypal-rest-sdk');
+const bodyParser = require('body-parser');
 
 dotenv.config();
 
@@ -18,6 +19,8 @@ const app = express();
 app.engine('ejs', engines.ejs);
 app.set('views', './views');
 app.set('view engine', 'ejs');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 paypal.configure({
     mode: 'sandbox', //sandbox or live
@@ -29,7 +32,7 @@ app.get('/', (req, res) => {
     res.render('index');
 });
 
-app.get('/paypal', (req, res) => {
+app.post('/paypal', (req, res) => {
     var create_payment_json = {
         intent: 'sale',
         payer: {
@@ -46,7 +49,7 @@ app.get('/paypal', (req, res) => {
                         {
                             name: 'item',
                             sku: 'item',
-                            price: '1.00',
+                            price: parseInt(req.body.price / 23000).toFixed(2),
                             currency: 'USD',
                             quantity: 1,
                         },
@@ -54,7 +57,7 @@ app.get('/paypal', (req, res) => {
                 },
                 amount: {
                     currency: 'USD',
-                    total: '1.00',
+                    total: parseInt(req.body.price / 23000).toFixed(2),
                 },
                 description: 'This is the payment description.',
             },
@@ -114,7 +117,7 @@ app.use(
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
+// app.use(express.bodyParser());
 // Routes
 app.use('/api', AllRouter.auth);
 app.use('/api', AllRouter.user);
