@@ -39,25 +39,16 @@ app.post('/paypal', (req, res) => {
             payment_method: 'paypal',
         },
         redirect_urls: {
-            return_url: 'https://nongsan-app.herokuapp.com/success',
-            cancel_url: 'https://nongsan-app.herokuapp.com/cancel',
+            return_url: 'http://localhost:5000/success',
+            cancel_url: 'http://localhost:5000/cancel',
         },
         transactions: [
             {
-                item_list: {
-                    items: [
-                        {
-                            name: 'item',
-                            sku: 'item',
-                            price: parseInt((req?.body?.price ? req?.body?.price : 23000) / 23000).toFixed(2),
-                            currency: 'USD',
-                            quantity: 1,
-                        },
-                    ],
-                },
                 amount: {
                     currency: 'USD',
-                    total: parseInt((req?.body?.price ? req?.body?.price : 23000) / 23000).toFixed(2),
+                    total: parseInt((req?.body?.price ? req?.body?.price : 23000) / 23000)
+                        .toFixed()
+                        .toString(),
                 },
                 description: 'This is the payment description.',
             },
@@ -85,7 +76,9 @@ app.get('/success', (req, res) => {
             {
                 amount: {
                     currency: 'USD',
-                    total: '1.00',
+                    total: parseInt((req?.body?.price ? req?.body?.price : 23000) / 23000)
+                        .toFixed()
+                        .toString(),
                 },
             },
         ],
