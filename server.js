@@ -33,6 +33,7 @@ app.get('/', (req, res) => {
 });
 
 app.post('/paypal', (req, res) => {
+    console.log('🚀 ~ file: server.js ~ line 36 ~ app.post ~ req', req.body);
     var create_payment_json = {
         intent: 'sale',
         payer: {
@@ -49,7 +50,7 @@ app.post('/paypal', (req, res) => {
                         {
                             name: 'item',
                             sku: 'item',
-                            price: parseInt(req.body.price / 23000).toFixed(2),
+                            price: parseInt((req?.body?.price ?? 0) / 23000).toFixed(2),
                             currency: 'USD',
                             quantity: 1,
                         },
@@ -57,7 +58,7 @@ app.post('/paypal', (req, res) => {
                 },
                 amount: {
                     currency: 'USD',
-                    total: parseInt(req.body.price / 23000).toFixed(2),
+                    total: parseInt((req?.body?.price ?? 0) / 23000).toFixed(2),
                 },
                 description: 'This is the payment description.',
             },
