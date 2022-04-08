@@ -39,8 +39,8 @@ app.post('/paypal', (req, res) => {
             payment_method: 'paypal',
         },
         redirect_urls: {
-            return_url: 'http://localhost:5000/success',
-            cancel_url: 'http://localhost:5000/cancel',
+            return_url: 'https://nongsan-app.herokuapp.com/success',
+            cancel_url: 'https://nongsan-app.herokuapp.com/cancel',
         },
         transactions: [
             {
