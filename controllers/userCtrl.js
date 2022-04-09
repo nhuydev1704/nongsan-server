@@ -58,7 +58,7 @@ const userCtrl = {
     },
     history: async (req, res) => {
         try {
-            const history = new APIFeature(Payments.find({ user_id: req.user.id }), req.query).filtering();
+            const history = new APIFeature(Payments.find({ user_id: req.user.id }), req.query).sorting().filtering();
 
             const historys = await history.query;
 
