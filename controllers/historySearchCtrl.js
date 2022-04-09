@@ -4,7 +4,10 @@ const APIFeature = require('../service/APIFeature');
 const historySearchCtrl = {
     get: async (req, res) => {
         try {
-            const feature = new APIFeature(HistorySearch.find({ user: req.user.id }).populate('user'), req.query)
+            const feature = new APIFeature(
+                HistorySearch.sort({ createdAt: -1 }).find({ user: req.user.id }).populate('user'),
+                req.query
+            )
                 .filtering()
                 .sorting()
                 .paginating();
