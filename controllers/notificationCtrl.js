@@ -24,6 +24,7 @@ const notificationCtrl = {
                 imgProduct: req.body.imgProduct,
             });
             await newNotification.save();
+            res.status(200).json({ msg: 'Thành công' });
         } catch (err) {
             return res.status(500).json({ msg: err.message });
         }
