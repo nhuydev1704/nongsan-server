@@ -56,7 +56,7 @@ const paymentCtrl = {
 
             if (!user) return res.status(400).json({ msg: 'User không tồn tại.' });
 
-            const { cart, address, priceCheckout, name, phone } = req.body;
+            const { cart, address, priceCheckout, name, phone, type } = req.body;
             const { _id, email } = user;
             const newPayment = new Payments({
                 user_id: _id,
@@ -66,6 +66,8 @@ const paymentCtrl = {
                 address,
                 cart,
                 priceCheckout,
+                status: type === 'payment' ? '2' : '1',
+                type,
             });
 
             cart.filter((item) => {
